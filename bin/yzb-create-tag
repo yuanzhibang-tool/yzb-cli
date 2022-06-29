@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+
+const { getPackageVersion, exec } = require("../src/common-function");
+
+function createTag() {
+    console.log(`开始-版本号更新并新建远程tag!`);
+    let version = getPackageVersion();
+    console.log(`源版本信息:${version}`);
+    let stdout = exec('npm version patch');
+    version = getPackageVersion();
+    console.log(`当前版本信息:${version}`);
+    stdout = exec('git push');
+    console.log(`创建tag分支:v${version}`);
+    console.log(`同步远程tag!`);
+    stdout = exec('git push origin --tags');
+    console.log(`完成-版本号更新并新建远程tag!`);
+}
+createTag();

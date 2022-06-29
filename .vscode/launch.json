@@ -5,11 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "pwa-node",
+      "name": "Launch Program",
+      "program": "${file}",
       "request": "launch",
-      "name": "Debug Extension",
-      "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/debug/debug.js"
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
     },
     {
       "name": "Debug Jest Tests",

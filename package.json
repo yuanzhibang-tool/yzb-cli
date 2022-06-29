@@ -1,7 +1,15 @@
 {
-  "name": "@yuanzhibang/script",
+  "name": "@yuanzhibang/cli",
   "version": "0.0.3",
-  "description": "猿之棒相关辅助脚本",
+  "description": "猿之棒相关命令行工具",
+  "main": "index.js",
+  "bin": {
+    "yzb-create-tag": "./bin/yzb-create-tag",
+    "yzb-dist-js": "./bin/yzb-dist-js",
+    "yzb-dist-ts": "./bin/yzb-dist-ts",
+    "yzb-pack-ext": "./bin/yzb-pack-ext",
+    "yzb-npm-publish": "./bin/yzb-npm-publish"
+  },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
     "tsc": "tsc",
@@ -10,20 +18,22 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yuanzhibang-tool/yzb-script.git"
+    "url": "https://github.com/yuanzhibang-tool/yzb-cli.git"
   },
   "author": "yuanzhibang.com",
   "license": "Apache License 2.0",
-  "dependencies": {},
+  "dependencies": {
+    "yargs": "^17.5.1"
+  },
   "devDependencies": {
+    "@types/jest": "^27.5.1",
+    "@types/node": "^17.0.33",
     "@yuanzhibang/extension-debugger": "^0.0.30",
     "archiver": "^5.3.1",
     "fs-extra": "^10.1.0",
     "jest": "^28.1.0",
-    "ts-lint": "^4.5.1",
-    "@types/jest": "^27.5.1",
-    "@types/node": "^17.0.33",
     "ts-jest": "^28.0.2",
+    "ts-lint": "^4.5.1",
     "ts-node": "^10.8.1",
     "typescript": "^4.6.4"
   }
