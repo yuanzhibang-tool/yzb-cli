@@ -14,7 +14,7 @@
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
     "tsc": "tsc",
-    "prenpm-publish": "./bin/yzb-create-tag && ./bin/yzb-dist-js",
+    "prenpm-publish": "./bin/yzb-create-tag && ./bin/yzb-dist-js && cp -r bin dist",
     "npm-publish": "./bin/yzb-npm-publish",
     "postnpm-publish": "./bin/yzb-merge-main"
   },
