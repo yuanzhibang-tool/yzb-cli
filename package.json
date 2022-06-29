@@ -16,7 +16,7 @@
     "tsc": "tsc",
     "prenpm-publish": "./bin/yzb-create-tag && ./bin/yzb-dist-js",
     "npm-publish": "./bin/yzb-npm-publish",
-    "merge-main": "./bin/yzb-merge-main"
+    "postnpm-publish": "./bin/yzb-merge-main"
   },
   "repository": {
     "type": "git",
