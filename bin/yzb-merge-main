@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+git pull origin develop
+git pull origin main
+git pull origin develop:main
+git push origin main
