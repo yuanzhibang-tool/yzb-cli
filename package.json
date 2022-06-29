@@ -8,13 +8,15 @@
     "yzb-dist-js": "./bin/yzb-dist-js",
     "yzb-dist-ts": "./bin/yzb-dist-ts",
     "yzb-pack-ext": "./bin/yzb-pack-ext",
-    "yzb-npm-publish": "./bin/yzb-npm-publish"
+    "yzb-npm-publish": "./bin/yzb-npm-publish",
+    "yzb-merge-main": "./bin/yzb-merge-main"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
     "tsc": "tsc",
     "prenpm-publish": "./bin/yzb-create-tag && ./bin/yzb-dist-js",
-    "npm-publish": "./bin/yzb-npm-publish"
+    "npm-publish": "./bin/yzb-npm-publish",
+    "merge-main": "./bin/yzb-merge-main"
   },
   "repository": {
     "type": "git",
