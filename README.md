@@ -1,1 +1,1 @@
-# yzb-script
+# yzb-cli
