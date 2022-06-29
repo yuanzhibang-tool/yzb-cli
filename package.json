@@ -4,6 +4,7 @@
   "description": "猿之棒相关辅助脚本",
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
+    "tsc": "tsc",
     "npm-publish": "node ./src/npm-publish-js.js"
   },
   "repository": {

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const fse = require('fs-extra');
-
+const { execSync } = require("child_process");
 
 // !删除dist文件夹和package文件
 console.log("开始准备发布npm包!");
