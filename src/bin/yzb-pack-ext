@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const packageJson = require('./package.json');
-const { zipDirectory } = require('../common-function');
+const { zipDirectory, getPackageName, getPackageVersion } = require('../common-function');
 
 function packageExtension() {
     // !删除package文件
@@ -14,7 +13,7 @@ function packageExtension() {
     console.log("创建package目录!");
     fs.mkdirSync('package');
     // !获取生成extension压缩包名称
-    const extensionZipFileName = `package/${packageJson.name}_${packageJson.version}.zip`;
+    const extensionZipFileName = `package/${getPackageName()}_${getPackageVersion()}.zip`;
     // !压缩extension.zip
     console.log("创建extension压缩包!");
     zipDirectory('dist', extensionZipFileName).then(() => {

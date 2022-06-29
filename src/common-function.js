@@ -13,12 +13,22 @@ function copyNessesaryDistFileToDir(targetDirPath) {
 
 // !读取package的version信息,packageDirPath不能以/结尾,当前目录什么都不用传递
 function getPackageVersion(packageDirPath = '') {
+    var packageJson = getPackageInfo(packageDirPath);
+    return packageJson.version;
+}
+
+function getPackageName(packageDirPath = '') {
+    var packageJson = getPackageInfo(packageDirPath);
+    return packageJson.name;
+}
+
+function getPackageInfo(packageDirPath = '') {
     if (packageDirPath.length > 0) {
         packageDirPath = packageDirPath + '/';
     }
     const packageJsonContent = fs.readFileSync(`${packageDirPath}package.json`);
     let packageInfo = JSON.parse(packageJsonContent);
-    return packageInfo.version;
+    return packageInfo;
 }
 
 function exec(script) {
@@ -54,5 +64,5 @@ function zipDirectory(sourceDir, outPath) {
 
 
 module.exports = {
-    exec, getPackageVersion, copyNessesaryDistFileToDir, cpFile, zipDirectory
+    exec, getPackageVersion, getPackageName, getPackageInfo, copyNessesaryDistFileToDir, cpFile, zipDirectory
 }
