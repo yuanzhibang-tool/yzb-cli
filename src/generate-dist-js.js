@@ -1,6 +1,5 @@
 const fs = require('fs');
 const fse = require('fs-extra');
-const { execSync } = require("child_process");
 
 // !删除dist文件夹和package文件
 console.log("开始准备发布npm包!");
@@ -16,6 +15,3 @@ fs.copyFileSync('LICENSE', 'dist/LICENSE');
 fs.copyFileSync('NOTICE', 'dist/NOTICE');
 fs.copyFileSync('README.md', 'dist/README.md');
 
-stdout = execSync('cd dist && npm publish --access public --registry https://registry.npmjs.com');
-console.log(stdout);
-console.log("发布成功!");

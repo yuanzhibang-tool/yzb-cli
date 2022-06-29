@@ -13,7 +13,3 @@ fs.copyFileSync('package.json', 'dist/package.json');
 fs.copyFileSync('LICENSE', 'dist/LICENSE');
 fs.copyFileSync('NOTICE', 'dist/NOTICE');
 fs.copyFileSync('README.md', 'dist/README.md');
-
-var stdout = execSync('cd dist && npm publish --access public --registry https://registry.npmjs.com');
-console.log(stdout);
-console.log("发布成功!");

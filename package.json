@@ -5,7 +5,8 @@
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
     "tsc": "tsc",
-    "npm-publish": "node ./src/npm-publish-js.js"
+    "prenpm-publish": "node ./src/create-tag.js",
+    "npm-publish": "node ./src/generate-dist-js.js; cd dist ; npm publish --access public --registry https://registry.npmjs.com"
   },
   "repository": {
     "type": "git",
