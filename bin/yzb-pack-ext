@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const packageJson = require('./package.json');
-const { zipDirectory } = require('../src/common-function');
+const { zipDirectory } = require('../common-function');
 
 function packageExtension() {
     // !删除package文件

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-const { generateDistFileTs } = require("../src/generate-dist");
+const { generateDistFileTs } = require("../generate-dist");
 
 generateDistFileTs();

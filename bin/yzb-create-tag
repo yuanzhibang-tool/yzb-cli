@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { getPackageVersion, exec } = require("../src/common-function");
+const { getPackageVersion, exec } = require("../common-function");
 
 function createTag() {
     console.log(`开始-版本号更新并新建远程tag!`);
