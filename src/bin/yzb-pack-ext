@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const { zipDirectory, getPackageName, getPackageVersion } = require('../common-function');
+const { zipDirectory, getPackageName, getPackageVersion, exec } = require('../common-function');
 
 function packageExtension() {
     // !删除package文件
     fs.rmSync('package', { recursive: true, force: true });
     // !只安装运行依赖
     console.log("安装运行依赖!");
-    stdout = execSync('cd dist && npm install --omit=dev');
+    stdout = exec('cd dist && npm install --omit=dev');
     // !创建package目录
     console.log("创建package目录!");
     fs.mkdirSync('package');
