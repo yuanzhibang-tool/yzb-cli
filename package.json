@@ -13,8 +13,8 @@
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
     "tsc": "tsc",
-    "prenpm-publish": "node ./src/create-tag.js",
-    "npm-publish": "node ./src/generate-dist-js.js; ./src/npm-publish.sh"
+    "prenpm-publish": "./bin/yzb-create-tag;./bin/yzb-dist-js",
+    "npm-publish": "./bin/yzb-npm-publish"
   },
   "repository": {
     "type": "git",
