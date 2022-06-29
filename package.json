@@ -1,6 +1,6 @@
 {
   "name": "@yuanzhibang/script",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "猿之棒相关辅助脚本",
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
