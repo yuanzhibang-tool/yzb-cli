@@ -9,7 +9,8 @@
     "yzb-dist-ts": "./bin/yzb-dist-ts",
     "yzb-pack-ext": "./bin/yzb-pack-ext",
     "yzb-npm-publish": "./bin/yzb-npm-publish",
-    "yzb-merge-main": "./bin/yzb-merge-main"
+    "yzb-merge-main": "./bin/yzb-merge-main",
+    "yzb-docker-stop-all": "./bin/yzb-docker-stop-all"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
