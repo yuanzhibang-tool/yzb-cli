@@ -10,7 +10,8 @@
     "yzb-pack-ext": "./bin/yzb-pack-ext",
     "yzb-npm-publish": "./bin/yzb-npm-publish",
     "yzb-merge-main": "./bin/yzb-merge-main",
-    "yzb-docker-stop-all": "./bin/yzb-docker-stop-all"
+    "yzb-docker-stop-all": "./bin/yzb-docker-stop-all",
+    "yzb-fast-npm": "bin/yzb-fast-npm"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
