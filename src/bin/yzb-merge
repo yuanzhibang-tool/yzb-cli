@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+if  [ ! -n "$1" ] ;then
+    echo "You have not input a source branch"
+    exit 1
+else
+    echo "Your source branch is $1"
+fi
+
+if  [ ! -n "$2" ] ;then
+    echo "You have not input a target branch"
+    exit 1
+else
+    echo "Your target branch is $2"
+fi
+
+read -p "Do your sure want to merge $1 into $2? (y/n, default n)"
+result=$REPLY
+
+if [ "$result" = "Y" ] || [ "$result" = "y" ]; then
+    git pull origin $1
+    git pull origin $2
+    git pull origin $1:$2
+    git push origin $2
+    echo "Finished working!"
+else
+    echo "Your cancel the merge action!"
+fi

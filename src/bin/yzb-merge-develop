@@ -8,14 +8,14 @@ else
     sourceBranch=$1
 fi
 
-read -p "Do your sure want to merge $sourceBranch into main? (y/n, default n)"
+read -p "Do your sure want to merge $sourceBranch into develop? (y/n, default n)"
 result=$REPLY
 
 if [ "$result" = "Y" ] || [ "$result" = "y" ]; then
     git pull origin $sourceBranch
-    git pull origin main
-    git pull origin $sourceBranch:main
-    git push origin main
+    git pull origin develop
+    git pull origin $sourceBranch:develop
+    git push origin develop
     echo "Finished working!"
 else
     echo "Your cancel the merge action!"
