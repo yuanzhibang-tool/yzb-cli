@@ -15,7 +15,7 @@ try {
     console.log('New directory: ' + process.cwd());
 }
 catch (err) {
-    console.err('chdir: ' + err);
+    console.error('chdir: ' + err);
 }
 
 const project = argv['project'];
