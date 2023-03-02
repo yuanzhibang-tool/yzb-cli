@@ -16,11 +16,12 @@
     "yzb-docker-stop-all": "./bin/yzb-docker-stop-all",
     "yzb-dsa": "./bin/yzb-docker-stop-all",
     "yzb-fast-npm": "bin/yzb-fast-npm",
-    "yzb-fn": "bin/yzb-fast-npm"
+    "yzb-fn": "bin/yzb-fast-npm",
+    "yzb-mf": "bin/yzb-mf"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
-    "test-yzb-mf": "/root/repos/github/yzb-script/src/bin/yzb-mf.js --project=testContent --cwd=/root/repos/gitlab/front-end-deploy-content --domain=test.ttqm.app --app_version='0.0.8' --path=/root/repos/github/yzb-script/dist",
+    "test-yzb-mf": "/root/repos/github/yzb-script/src/bin/yzb-mf --project=testContent --cwd=/root/repos/gitlab/front-end-deploy-content --domain=test.ttqm.app --app_version='0.0.8' --path=/root/repos/github/yzb-script/dist",
     "tsc": "tsc",
     "prenpm-publish": "./src/bin/yzb-create-tag && ./src/bin/yzb-dist-js",
     "npm-publish": "./src/bin/yzb-npm-publish",
