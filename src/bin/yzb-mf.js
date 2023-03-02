@@ -78,10 +78,21 @@ function copyAndCommitAndCreateMergeRequest(contentPath, project, version, domai
     copyContentPath(contentPath, project, domain);
     execSync('git add .');
     execSync(`git commit -m 'update ${project} version:${version}'`);
-    execSync(`git push --set-upstream origin ${branchName}`)
-    execSync(`git push -o merge_request.create -o merge_request.target=develop -o merge_request.remove_source_branch`)
+    execSync(`git push origin  ${branchName}`);
     execSync('git checkout develop');
-    execSync(`git branch --delete ${branchName} -f`);
+    execSync(`git pull origin ${branchName}:develop`)
+    execSync('git push origin develop');
+    try {
+        execSync(`git branch --delete ${branchName} -f`);
+    } catch (error) {
+        console.error(error);
+    }
+    try {
+        execSync(`git push origin --delete ${branchName} -f`);
+    } catch (error) {
+        console.error(error);
+    }
+    execSync('git pull');
 }
 
 copyAndCommitAndCreateMergeRequest(contentPath, project, version, domain);

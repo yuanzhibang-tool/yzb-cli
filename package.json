@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
-    "test-yzb-mf": "/root/repos/github/yzb-script/src/bin/yzb-mf.js --project=testContent --cwd=/root/repos/gitlab/front-end-deploy-content --domain=test.ttqm.app --app_version='0.0.3' --path=/root/repos/github/yzb-script/dist",
+    "test-yzb-mf": "/root/repos/github/yzb-script/src/bin/yzb-mf.js --project=testContent --cwd=/root/repos/gitlab/front-end-deploy-content --domain=test.ttqm.app --app_version='0.0.8' --path=/root/repos/github/yzb-script/dist",
     "tsc": "tsc",
     "prenpm-publish": "./src/bin/yzb-create-tag && ./src/bin/yzb-dist-js",
     "npm-publish": "./src/bin/yzb-npm-publish",
