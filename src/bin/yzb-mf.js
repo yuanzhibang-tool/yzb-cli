@@ -20,32 +20,26 @@ catch (err) {
 
 const project = argv['project'];
 const domain = argv['domain'];
-const version = argv['version'];
+const version = argv['app_version'];
 const contentPath = argv['path'];
 
-try {
-    process.chdir('/tmp');
-    console.log('New directory: ' + process.cwd());
-}
-catch (err) {
-    console.log('chdir: ' + err);
-}
-
-function copyContentPath(contentPath, project) {
+function copyContentPath(contentPath, project, domain) {
     try {
         const oldContentPath = `./project/${project}/content`
-        fs.rmdirSync(oldContentPath);
+        fs.rmdirSync(oldContentPath, { recursive: true });
     } catch (error) {
+        console.error(error);
     }
 
     try {
-        const oldContentPath = path.join(__dirname, `./project/${project}`)
+        const oldContentPath = `./project/${project}`
         fs.mkdirSync(oldContentPath, { recursive: true });
     } catch (error) {
+        console.error(error);
     }
 
     try {
-        const oldContentPath = path.join(__dirname, `./project/${project}/content`)
+        const oldContentPath = `./project/${project}/content`
         fs.cpSync(contentPath, oldContentPath, { recursive: true });
     } catch (error) {
         console.error(error);
@@ -53,8 +47,9 @@ function copyContentPath(contentPath, project) {
 
     try {
         const oldContentPath = `./project/${project}/info.json`
-        fs.rmdirSync(oldContentPath);
+        fs.rmSync(oldContentPath);
     } catch (error) {
+        console.error(error);
     }
 
     try {
@@ -69,17 +64,24 @@ function copyContentPath(contentPath, project) {
     }
 }
 
-function copyAndCommitAndCreateMergeRequest(contentPath, project, version) {
+function copyAndCommitAndCreateMergeRequest(contentPath, project, version, domain) {
     const branchName = `update/${project}/version/${version}`;
     execSync('git checkout develop');
+    execSync('git pull');
+    try {
+        execSync(`git branch --delete ${branchName} -f`);
+    } catch (error) {
+        console.error(error);
+    }
     execSync(`git checkout -b ${branchName}`);
-    copyContentPath(contentPath, project);
+    execSync(`git push --set-upstream origin ${branchName}`)
+    copyContentPath(contentPath, project, domain);
     execSync('git add .');
-    execSync(`git commit -m 'update ${update} version:${version}'`);
+    execSync(`git commit -m 'update ${project} version:${version}'`);
     execSync(`git push --set-upstream origin ${branchName}`)
     execSync(`git push -o merge_request.create -o merge_request.target=develop -o merge_request.remove_source_branch`)
     execSync('git checkout develop');
-    execSync(`git branch --delete ${branchName}`);
+    execSync(`git branch --delete ${branchName} -f`);
 }
 
-copyAndCommitAndCreateMergeRequest(contentPath, project);
+copyAndCommitAndCreateMergeRequest(contentPath, project, version, domain);
