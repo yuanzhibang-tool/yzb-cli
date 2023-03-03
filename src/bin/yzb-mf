@@ -12,10 +12,10 @@ const argv = yargs(hideBin(process.argv)).argv;
 const cwd = argv['cwd'];
 try {
     process.chdir(cwd);
-    console.log('New directory: ' + process.cwd());
+    // console.log('New directory: ' + process.cwd());
 }
 catch (err) {
-    console.error('chdir: ' + err);
+    // console.error('chdir: ' + err);
 }
 
 const project = argv['project'];
@@ -28,28 +28,28 @@ function copyContentPath(contentPath, project, domain) {
         const oldContentPath = `./project/${project}/content`
         fs.rmdirSync(oldContentPath, { recursive: true });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
     try {
         const oldContentPath = `./project/${project}`
         fs.mkdirSync(oldContentPath, { recursive: true });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
     try {
         const oldContentPath = `./project/${project}/content`
         fs.cpSync(contentPath, oldContentPath, { recursive: true });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
     try {
         const oldContentPath = `./project/${project}/info.json`
         fs.rmSync(oldContentPath);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 
     try {
@@ -60,7 +60,7 @@ function copyContentPath(contentPath, project, domain) {
         };
         fs.writeFileSync(oldContentPath, JSON.stringify(info));
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
 }
 
@@ -71,7 +71,7 @@ function copyAndCommitAndCreateMergeRequest(contentPath, project, version, domai
     try {
         execSync(`git branch --delete ${branchName} -f`);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
     execSync(`git checkout -b ${branchName}`);
     execSync(`git push --set-upstream origin ${branchName}`)
@@ -85,12 +85,12 @@ function copyAndCommitAndCreateMergeRequest(contentPath, project, version, domai
     try {
         execSync(`git branch --delete ${branchName} -f`);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
     try {
         execSync(`git push origin --delete ${branchName} -f`);
     } catch (error) {
-        console.error(error);
+        // console.error(error);
     }
     execSync('git pull');
 }
