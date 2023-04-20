@@ -17,7 +17,9 @@
     "yzb-dsa": "./bin/yzb-docker-stop-all",
     "yzb-fast-npm": "bin/yzb-fast-npm",
     "yzb-fn": "bin/yzb-fast-npm",
-    "yzb-mf": "bin/yzb-mf"
+    "yzb-mf": "bin/yzb-mf",
+    "yzb-mac-sign": "bin/yzb-mac-sign",
+    "yzb-mac-notarize": "bin/yzb-mac-notarize"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
@@ -25,7 +27,9 @@
     "tsc": "tsc",
     "prenpm-publish": "./src/bin/yzb-create-tag && ./src/bin/yzb-dist-js",
     "npm-publish": "./src/bin/yzb-npm-publish",
-    "postnpm-publish": "./src/bin/yzb-merge-main"
+    "postnpm-publish": "./src/bin/yzb-merge-main",
+    "yzb-mac-sign-test": "/Users/shandavid/Documents/workspace/github/yzb-cli/src/bin/yzb-mac-sign --cert_path=\"\" --cert_name=\"\" --cert_pwd=\"\" --app_path=\"\"",
+    "yzb-mac-notarize": "/Users/shandavid/Documents/workspace/github/yzb-cli/src/bin/yzb-mac-notarize --apple_id=\"\" --apple_id_pwd=\"\" --team_id=\"\" --app_dir=\"\""
   },
   "repository": {
     "type": "git",
