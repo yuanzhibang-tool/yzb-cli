@@ -2,7 +2,7 @@
 // merge-release-front-end-project 将release包拷贝到同一个用以管理释放版本的repo
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
-const { execSync } = require('child_process')
+const { execSync, execFile, execFileSync } = require('child_process')
 const { randomBytes } = require('crypto')
 const path = require('path')
 const fs = require('fs')
@@ -15,7 +15,38 @@ const certName = argv['cert_name'];
 const certPwd = argv['cert_pwd'];
 const appPath = argv['app_path'];
 
-function doWithKeychain(certPath, certPwd, callback) {
+function exec(file, args, options) {
+    return new Promise((resolve, reject) => {
+        try {
+            const result = execFileSync(
+                file,
+                args,
+                {
+                    ...options,
+                    maxBuffer: 1000 * 1024 * 1024,
+                    env: process.env,
+                }
+            )
+            resolve(result.toString())
+        } catch (error) {
+            reject(error)
+        }
+
+    })
+}
+
+function listUserKeychains() {
+    return exec("security", ["list-keychains", "-d", "user"]).then(it =>
+        it.split("\n")
+            .map(it => {
+                const r = it.trim()
+                return r.substring(1, r.length - 1)
+            })
+            .filter(it => it.length > 0)
+    )
+}
+
+async function doWithKeychain(certPath, certPwd, callback) {
     const keychainFile = path.join(os.tmpdir(), `tmp-sign-${crypto.randomUUID()}.keychain`)
     try {
         fs.rmSync(keychainFile);
@@ -30,25 +61,35 @@ function doWithKeychain(certPath, certPwd, callback) {
     for (let index = 0; index < cmds.length; index++) {
         const cmd = cmds[index];
         try {
-            execSync('security ' + cmd.join(' '));
+            await exec('security', cmd);
         } catch (error) {
             console.log(error);
             console.log("sdterr", error.stdout.toString())
         }
     }
-    execSync("security " + ["import", `"${certPath}"`, "-k", `"${keychainFile}"`, "-T", "/usr/bin/codesign", "-T", "/usr/bin/productbuild", "-P", `"${certPwd}"`].join(' '))
-    execSync("security " + ["set-key-partition-list", "-S", "apple-tool:,apple:", "-s", "-k", `"${keychainPassword}"`, `"${keychainFile}"`].join(' '))
+    const list = await listUserKeychains();
+    if (!list.includes(keychainFile)) {
+        const result = await exec("security", ["list-keychains", "-d", "user", "-s", keychainFile].concat(list))
+        console.log(result)
+    }
+
+    const res1 = await exec("security", ["import", certPath, "-k", keychainFile, "-T", "/usr/bin/codesign", "-T", "/usr/bin/productbuild", "-P", certPwd])
+    console.log(res1)
+    const res2 = await exec("security", ["set-key-partition-list", "-S", "apple-tool:,apple:", "-s", "-k", keychainPassword, keychainFile])
+    console.log(res1)
     callback(keychainFile);
     try {
+        await exec("security", ["delete-keychain", keychainFile])
         fs.rmSync(keychainFile);
     } catch (error) {
     }
 }
 
-function sign(appPath, keychainFile, certName) {
-    execSync("codesign " + ["--deep", "--force", "--sign", `"${certName}"`, `"${appPath}"`, '--keychain', `"${keychainFile}"`].join(" "));
+async function sign(appPath, keychainFile, certName) {
+    const result = await exec('codesign', ["--deep", "--force", "--sign", certName, appPath, '--keychain', keychainFile]);
+    console.log(result)
 }
 
-doWithKeychain(certPath, certPwd, (keychainFile) => {
-    sign(appPath, keychainFile, certName);
+doWithKeychain(certPath, certPwd, async (keychainFile) => {
+    await sign(appPath, keychainFile, certName);
 });
