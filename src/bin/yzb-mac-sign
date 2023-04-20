@@ -1,0 +1,54 @@
+#!/usr/bin/env node
+// merge-release-front-end-project 将release包拷贝到同一个用以管理释放版本的repo
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+const { execSync } = require('child_process')
+const { randomBytes } = require('crypto')
+const path = require('path')
+const fs = require('fs')
+const os = require('os');
+const crypto = require('crypto');
+
+const argv = yargs(hideBin(process.argv)).argv;
+const certPath = argv['cert_path'];
+const certName = argv['cert_name'];
+const certPwd = argv['cert_pwd'];
+const appPath = argv['app_path'];
+
+function doWithKeychain(certPath, certPwd, callback) {
+    const keychainFile = path.join(os.tmpdir(), `tmp-sign-${crypto.randomUUID()}.keychain`)
+    try {
+        fs.rmSync(keychainFile);
+    } catch (error) {
+    }
+    const keychainPassword = randomBytes(32).toString("base64")
+    const cmds = [
+        ["create-keychain", "-p", keychainPassword, keychainFile],
+        ["unlock-keychain", "-p", keychainPassword, keychainFile],
+        ["set-keychain-settings", keychainFile],
+    ];
+    for (let index = 0; index < cmds.length; index++) {
+        const cmd = cmds[index];
+        try {
+            execSync('security ' + cmd.join(' '));
+        } catch (error) {
+            console.log(error);
+            console.log("sdterr", error.stdout.toString())
+        }
+    }
+    execSync("security " + ["import", `"${certPath}"`, "-k", `"${keychainFile}"`, "-T", "/usr/bin/codesign", "-T", "/usr/bin/productbuild", "-P", `"${certPwd}"`].join(' '))
+    execSync("security " + ["set-key-partition-list", "-S", "apple-tool:,apple:", "-s", "-k", `"${keychainPassword}"`, `"${keychainFile}"`].join(' '))
+    callback(keychainFile);
+    try {
+        fs.rmSync(keychainFile);
+    } catch (error) {
+    }
+}
+
+function sign(appPath, keychainFile, certName) {
+    execSync("codesign " + ["--deep", "--force", "--sign", `"${certName}"`, `"${appPath}"`, '--keychain', `"${keychainFile}"`].join(" "));
+}
+
+doWithKeychain(certPath, certPwd, (keychainFile) => {
+    sign(appPath, keychainFile, certName);
+});

@@ -1,0 +1,90 @@
+#!/usr/bin/env node
+// merge-release-front-end-project 将release包拷贝到同一个用以管理释放版本的repo
+const yargs = require('yargs/yargs')
+const { hideBin } = require('yargs/helpers')
+
+const { spawnSync } = require('child_process')
+const path = require('path')
+const os = require('os');
+const { mkdtemp, rmdir } = require('fs/promises');
+
+const argv = yargs(hideBin(process.argv)).argv;
+
+const appleId = argv['apple_id'];
+const appleIdPassword = argv['apple_id_pwd'];
+const teamId = argv['team_id'];
+const appDirPath = argv['app_dir'];
+
+function notarize(appleId, appleIdPassword, teamId, appDirPath) {
+    async function withTempDir(callback) {
+        const dir = await mkdtemp(path.resolve(os.tmpdir(), 'electron-notarize-'));
+        let result;
+        try {
+            result = await callback(dir);
+        } catch (err) {
+            await rmdir(dir, { recursive: true });
+            throw err;
+        }
+        await rmdir(dir, { recursive: true });
+        return result;
+    }
+    withTempDir(async (dir) => {
+        const zipPath = path.resolve(dir, `${path.parse(appDirPath).name}.zip`);
+        console.log('zipping application to:', zipPath);
+        const zipResult = spawnSync(
+            'ditto',
+            ['-c', '-k', '--sequesterRsrc', '--keepParent', path.basename(appDirPath), zipPath],
+            {
+                cwd: path.dirname(appDirPath),
+            },
+        );
+        if (zipResult.status !== 0) {
+            throw new Error(
+                `Failed to zip application, exited with code: ${zipResult.code}\n\n${zipResult.output}`,
+            );
+        }
+        console.log('zip succeeded, attempting to upload to Apple');
+
+        const notarizeArgs = [
+            'notarytool',
+            'submit',
+            zipPath,
+            '--apple-id',
+            `${appleId}`,
+            "--password",
+            `${appleIdPassword}`,
+            "--team-id",
+            `${teamId}`,
+            '--wait',
+            '--output-format',
+            'json',
+        ];
+        const result = await spawnSync('xcrun', notarizeArgs);
+        if (result.status !== 0) {
+            try {
+                const responseString = result.stderr.toString();
+                const parsed = JSON.parse(responseString);
+                if (parsed && parsed.id) {
+                    const logResult = await spawnSync('xcrun', [
+                        'notarytool',
+                        'log',
+                        parsed.id,
+                        '--apple-id',
+                        `${appleId}`,
+                        "--password",
+                        `${appleIdPassword}`,
+                        "--team-id",
+                        `${teamId}`,
+                    ]);
+                    console.log('notarization log', logResult.stdout.toString());
+                }
+            } catch (e) {
+                console.error('failed to pull notarization logs', e);
+            }
+            throw new Error(`Failed to notarize via notarytool\n\n${result.output}`);
+        }
+        console.log('notarization success', result.stdout.toString());
+    });
+}
+
+notarize(appleId, appleIdPassword, teamId, appDirPath)
