@@ -1,6 +1,6 @@
 {
   "name": "@yuanzhibang/cli",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "description": "猿之棒相关命令行工具",
   "main": "index.js",
   "bin": {
