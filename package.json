@@ -21,7 +21,9 @@
     "yzb-mac-sign": "bin/yzb-mac-sign",
     "yzb-mac-notarize": "bin/yzb-mac-notarize",
     "yzb-oss-upload-folder": "bin/yzb-oss-upload-folder",
-    "yzb-docker-clear": "bin/yzb-docker-clear"
+    "yzb-docker-clear": "bin/yzb-docker-clear",
+    "yzb-vsc": "bin/yzb-vsc",
+    "yzb-vsc-win": "bin/yzb-vsc-win"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",

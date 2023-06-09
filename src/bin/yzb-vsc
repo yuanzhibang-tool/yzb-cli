@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if  [ ! -n "$1" ] ;then
+    echo "You have not input a server username"
+    exit 1
+else
+    echo "Your server user is $1"
+fi
+
+if  [ ! -n "$2" ] ;then
+    echo "You have not input a server host"
+    exit 1
+else
+    echo "Your server host is $2"
+fi
+
+export USER_AT_HOST="$1@$2"
+export PUBKEYPATH="$HOME/.ssh/id_rsa.pub"
+
+ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
