@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 cd dist
-npm publish
+npm publish --registry https://registry.npmjs.org/
