@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+if  [ ! -n "$1" ] ;then
+    echo "You have not input a git username"
+    exit 1
+else
+    echo "Your git username is $1"
+fi
+
+if  [ ! -n "$2" ] ;then
+    echo "You have not input a git password"
+    exit 1
+else
+    echo "Your git password is $2"
+fi
+
+if  [ ! -n "$3" ] ;then
+    echo "You have not input a hf source"
+    exit 1
+else
+    echo "Your hf source is $3"
+fi
+
+if  [ ! -n "$4" ] ;then
+    echo "You have not input a hf target"
+    exit 1
+else
+    echo "Your hf target is $4"
+fi
+
+# add login info for huggingface
+
+sourceRepo=https://huggingface.co/datasets/$3
+
+targetRepo=https://huggingface.co/datasets/$4
+
+git lfs install
+git config --global credential.helper store --replace-all
+echo "https://$1:$2@huggingface.co" > ~/.git-credentials
+
+tmp_repo_folder=.tmp_repo_source
+
+rm -rf $tmp_repo_folder
+mkdir $tmp_repo_folder
+git clone $sourceRepo $tmp_repo_folder
+
+cd $tmp_repo_folder
+
+git config lfs.allowincompletepush true
+git lfs fetch --all
+git remote add target-origin $targetRepo
+git push target-origin --all --force
+rm -rf $tmp_repo_folder
