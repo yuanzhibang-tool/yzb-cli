@@ -24,7 +24,8 @@
     "yzb-docker-clear": "bin/yzb-docker-clear",
     "yzb-vsc": "bin/yzb-vsc",
     "yzb-vsc-win": "bin/yzb-vsc-win.ps1",
-    "yzb-hf-fork": "bin/yzb-hf-fork"
+    "yzb-hf-fork": "bin/yzb-hf-fork",
+    "yzb-commit-all":"bin/yzb-commit-all"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",

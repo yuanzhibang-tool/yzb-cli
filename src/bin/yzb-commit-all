@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# commit all changes and push to remote
+git add .
+git commit -m "Auto commit message"
+git push
