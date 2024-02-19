@@ -14,7 +14,14 @@ else
     echo "Your server host is $2"
 fi
 
-export USER_AT_HOST="$1@$2"
+if  [ ! -n "$3" ] ;then
+    $port=22
+else
+    $port=$3
+fi
+
+export USER_AT_HOST="$1@$2 -p $port"
+
 export PUBKEYPATH="$HOME/.ssh/id_rsa.pub"
 
 ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
