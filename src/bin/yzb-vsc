@@ -20,8 +20,8 @@ else
     $port=$3
 fi
 
-export USER_AT_HOST="$1@$2 -p $port"
+export USER_AT_HOST="$1@$2"
 
 export PUBKEYPATH="$HOME/.ssh/id_rsa.pub"
 
-ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST"
+ssh-copy-id -i "$PUBKEYPATH" "$USER_AT_HOST" -p $port

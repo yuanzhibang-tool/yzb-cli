@@ -14,9 +14,9 @@ if ($null -eq $user -or $null -eq $serverHost) {
 
 if ($null -eq $port) {
     $port = 22
-} 
+}
 
-$USER_AT_HOST = "$USER_AT_HOST -p $port"
+$USER_AT_HOST = "$user@$serverHost"
 
 $PUBKEYPATH = "$HOME\.ssh\id_rsa.pub"
-$pubKey = (Get-Content "$PUBKEYPATH" | Out-String); ssh "$USER_AT_HOST"  "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '${pubKey}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+$pubKey = (Get-Content "$PUBKEYPATH" | Out-String); ssh "$USER_AT_HOST" -p $port "mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo '${pubKey}' >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
