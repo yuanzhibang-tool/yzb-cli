@@ -1,6 +1,6 @@
 {
   "name": "@yuanzhibang/cli",
-  "version": "0.0.57",
+  "version": "0.0.58",
   "description": "猿之棒相关命令行工具",
   "main": "index.js",
   "bin": {
@@ -28,7 +28,7 @@
     "yzb-commit-all": "bin/yzb-commit-all",
     "yzb-proxy": "bin/yzb-proxy",
     "yzb-proxy-win": "bin/yzb-proxy-win",
-    "yzb-install-node":"bin/yzb-install-node"
+    "yzb-install-node": "bin/yzb-install-node"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
