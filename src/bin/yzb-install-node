@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if  [ ! -n "$1" ] ;then
+    echo "You have not input a node version"
+    exit 1
+else
+    echo "Your node version is $1"
+fi
+
+curl -sL https://deb.nodesource.com/setup_$1.x | sudo -E bash -
+apt-get install -y nodejs

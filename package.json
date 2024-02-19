@@ -27,7 +27,8 @@
     "yzb-hf-fork": "bin/yzb-hf-fork",
     "yzb-commit-all": "bin/yzb-commit-all",
     "yzb-proxy": "bin/yzb-proxy",
-    "yzb-proxy-win": "bin/yzb-proxy-win"
+    "yzb-proxy-win": "bin/yzb-proxy-win",
+    "yzb-install-node":"bin/yzb-install-node"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
