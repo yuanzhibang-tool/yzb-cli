@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+if  [ ! -n "$1" ] ;then
+    echo "You have not input a proxy info"
+    exit 1
+else
+    echo "Your server proxy info is $1"
+fi
+
+# 设置git代理
+git config --global http.proxy $1
+git config --global https.proxy $1
+
+# 设置npm代理
+npm config set proxy $1
+npm config set https-proxy $1
+
+
+# 设置docker代理
+mkdir -p /etc/systemd/system/docker.service.d
+cat > /etc/systemd/system/docker.service.d/http-proxy.conf <<EOF
+[Service]
+Environment="HTTP_PROXY=$1"
+Environment="HTTPS_PROXY=$1"
+EOF

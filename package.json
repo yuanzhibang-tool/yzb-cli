@@ -25,7 +25,9 @@
     "yzb-vsc": "bin/yzb-vsc",
     "yzb-vsc-win": "bin/yzb-vsc-win.ps1",
     "yzb-hf-fork": "bin/yzb-hf-fork",
-    "yzb-commit-all": "bin/yzb-commit-all"
+    "yzb-commit-all": "bin/yzb-commit-all",
+    "yzb-proxy": "bin/yzb-proxy",
+    "yzb-proxy-win": "bin/yzb-proxy-win"
   },
   "scripts": {
     "test": "jest --runInBand --env=node --colors --coverage test",
